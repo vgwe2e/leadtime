@@ -1,0 +1,63 @@
+---
+description: overview of approach with code snippets
+globs: *
+---
+To determine the impact of lead time changes on your planning, especially when safety stock is expressed in coverage duration, you can start by building an equation that relates these variables.
+
+Coverage Duration represents how many days of demand your safety stock can cover. If lead time is also measured in days, you can consider:
+	1.	Equation Setup: The basic formula for safety stock in terms of coverage duration is:
+￼
+	2.	Lead Time’s Role: If the lead time changes, it will impact how much safety stock is required. Shorter lead times generally reduce the required safety stock, because you can replenish inventory more quickly.
+	3.	Evaluating Impact: To see if adjusting lead times has a material impact, consider:
+	•	Calculate the change in safety stock as lead time changes. This would involve recalculating coverage duration requirements.
+	•	Compare the reduction in safety stock against the operational costs or benefits of changing lead times.
+	4.	Network Considerations: If the average distance between nodes is three days, and lead time reductions are feasible within this range, you can explore whether shorter lead times will significantly reduce safety stock without compromising service levels.
+
+Here’s a basic script outline:
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+def generate_demand(mean, std_dev, days):
+    """Generate daily demand using normal distribution, ensuring non-negative values."""
+    return np.maximum(np.random.normal(mean, std_dev, days), 0)
+
+def simulate_network(lead_times, coverage_duration, mean_demand, std_dev_demand, days, iterations=1000):
+    """Simulate the network with different lead times and calculate safety stock."""
+    results = {lt: [] for lt in lead_times}
+    
+    for _ in range(iterations):
+        daily_demand = generate_demand(mean_demand, std_dev_demand, days)
+        avg_daily_demand = np.mean(daily_demand)
+        
+        for lt in lead_times:
+            safety_stock = coverage_duration * avg_daily_demand
+            results[lt].append(safety_stock)
+            
+    return results
+
+def plot_results(results, lead_times):
+    """Plot the distribution of safety stock for each lead time."""
+    plt.figure(figsize=(10, 6))
+    for lt in lead_times:
+        plt.hist(results[lt], bins=50, alpha=0.5, label=f'Lead Time {lt} days')
+    plt.xlabel('Safety Stock')
+    plt.ylabel('Frequency')
+    plt.title('Safety Stock Distribution for Different Lead Times')
+    plt.legend()
+    plt.show()
+
+# Parameters
+mean_demand = 100  # Average daily demand
+std_dev_demand = 20  # Standard deviation of daily demand
+days = 365  # Simulation period in days
+coverage_duration = 7  # Safety stock coverage duration in days
+lead_times = [1, 2, 3]  # Lead times in days
+
+# Simulation
+results = simulate_network(lead_times, coverage_duration, mean_demand, std_dev_demand, days)
+
+# Plotting
+plot_results(results, lead_times)
+
+

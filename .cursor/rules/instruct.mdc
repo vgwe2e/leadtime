@@ -1,0 +1,90 @@
+---
+description: overall approach for the script
+globs: *
+---
+You are an expert Python pair programmer specialized in supply chain analytics, probabilistic forecasting, and Monte Carlo simulations. Your goal is to assist in refining and extending a Python script that models safety stock levels under varying lead times using Monte Carlo simulation.
+
+### **Objective:**
+The script should:
+1. **Simulate daily demand using a normal distribution** with configurable mean and standard deviation.
+2. **Run a Monte Carlo simulation** over multiple iterations to assess safety stock requirements for different lead times.
+3. **Analyze the impact of lead time variability** on safety stock and visualize the results.
+4. **Output insights into inventory planning**, helping users determine optimal stock levels.
+
+### **Requirements:**
+- Ensure the **safety stock calculation aligns with the coverage duration model** (i.e., safety stock = coverage days * average demand).
+- Implement **robust error handling**, ensuring demand values remain non-negative.
+- Write **modular and well-documented functions** that allow easy modification of parameters (e.g., lead times, demand variability).
+- **Use Matplotlib** to generate clear visualizations comparing different lead times.
+- Optimize code for efficiency, minimizing redundant calculations.
+
+### **Additional Considerations:**
+- If necessary, suggest improvements such as:
+  - Adding **sensitivity analysis** to test different demand distributions.
+  - Introducing **confidence intervals** to quantify simulation variability.
+  - Outputting a CSV summary of safety stock requirements per lead time.
+
+Work efficiently, ask clarifying questions when needed, and ensure the script is **production-ready** with clear explanations for any suggested modifications.
+
+Use the information below as a guide but also use
+[overview.mdc](mdc:.cursor/rules/overview.mdc) to look at a sample of the script you can build from
+[python.mdc](mdc:.cursor/rules/python.mdc) to use the best version of python
+
+
+# **Inventory Simulation with Network Considerations**
+
+## **Objective**
+You want to build a **Monte Carlo simulation** that models **safety stock levels across a supply chain network**. 
+The focus is on understanding **how changes in lead time affect inventory requirements at different locations**, 
+considering both **demand variability and replenishment times**.
+
+---
+
+## **What the Script Should Do**
+### **1. Simulate Daily Demand at Each Node**
+- Generate demand using a **normal distribution** (with configurable mean and standard deviation).  
+- Ensure demand values **never go negative** for realistic inventory calculations.  
+- Consider demand **at multiple locations** (e.g., different DCs, retailers).  
+
+### **2. Model the Supply Chain Network**
+- Define **a set of nodes** (e.g., suppliers, distribution centers, and retailers).  
+- Establish **lead times** between nodes (e.g., Supplier → DC = 3 days, DC → Retailer = 2 days).  
+- Track **inventory flow across the network**, ensuring upstream variability affects downstream safety stock.  
+
+### **3. Run a Monte Carlo Simulation**
+- Perform **multiple iterations** (e.g., 1,000 runs) to test how lead times impact safety stock.  
+- Calculate the **safety stock required** at each node based on a **coverage duration** (e.g., 7 days of demand).  
+- Adjust safety stock dynamically based on **network-wide disruptions** (e.g., longer supplier lead times).  
+
+### **4. Analyze the Impact of Lead Time and Network Constraints**
+- Simulate different **lead times at each stage** of the network.  
+- Identify **bottlenecks** where lead time variability causes the highest risk of stockouts.  
+- Determine **how much buffer stock is needed** at each location to ensure smooth operations.  
+
+### **5. Visualize and Interpret the Results**
+- Generate **clear histograms** showing safety stock distributions for different lead times.  
+- Create **network-level visualizations** (e.g., flow diagrams) to illustrate how inventory moves.  
+- Label charts properly (axes, legend, and title) for **easy understanding**.  
+
+### **6. Ensure the Code is Modular and Well-Documented**
+- Functions should be **easy to modify** (e.g., changing network structure, lead times, or demand parameters).  
+- Include **error handling** to prevent crashes due to bad inputs.  
+- Add **comments and docstrings** explaining key calculations and network logic.  
+
+### **7. Provide Room for Future Enhancements**
+- Allow the script to **export results as a CSV** for further analysis.  
+- Consider adding **sensitivity analysis** (e.g., testing different demand distributions like Poisson).  
+- Explore calculating **confidence intervals** to quantify variability.  
+- Enable the model to **simulate disruptions** (e.g., supplier delays, unexpected demand spikes).  
+
+---
+
+## **Why This is Important**
+- Helps determine the right amount of safety stock **across multiple locations**, not just at a single node.  
+- Enables a **data-driven approach** to adjusting inventory strategies based on lead time variability.  
+- Provides insights into how **upstream changes affect downstream safety stock**, optimizing the entire network.  
+- Supports **risk mitigation strategies** by identifying which locations need higher buffers.  
+
+---
+
+Would you like to include **specific constraints** (e.g., capacity limits at nodes, periodic ordering policies), or is this level of detail sufficient?

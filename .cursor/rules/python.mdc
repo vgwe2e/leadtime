@@ -1,0 +1,124 @@
+---
+description: python coding best practices
+globs: *
+---
+Here’s a compressed markdown version combining the best of both documents for an LLM-friendly format:
+
+# **🐍 Python Best Practices for Clean, Efficient, and Maintainable Code**
+
+## **1️⃣ PEP 8: Code Style Essentials**
+✅ **4 Spaces per Indent** *(No Tabs)*  
+✅ **Limit Line Length**: **79 chars (72 for comments)**  
+✅ **Naming Conventions**:  
+   - `snake_case` → functions/variables (`def process_data():`)  
+   - `CamelCase` → classes (`class DataProcessor:`)  
+   - `UPPER_SNAKE_CASE` → constants (`MAX_RETRIES = 5`)  
+
+✅ **Whitespace Rules**:  
+   - `x = (a + b) * (c - d)` *(Spaces around operators)*  
+   - `my_list = [1, 2, 3]` *(No spaces inside brackets)*  
+   - `if x is None:` *(Use `is` for None checks)*  
+
+✅ **Code Structure**:  
+   - **1 blank line** between functions, **2 blank lines** between classes  
+   - Always use `if __name__ == "__main__":` for scripts  
+
+---
+
+## **2️⃣ Token Efficiency: Write Less, Do More**
+✅ **Use Pythonic Patterns**  
+- **List Comprehensions Over Loops** → `squares = [x**2 for x in range(10)]`  
+- **Generator Expressions** → `sum(x**2 for x in range(10**6))` *(Memory-efficient)*  
+- **`map()` and `filter()`** → `evens = list(filter(lambda x: x % 2 == 0, range(10)))`  
+- **Walrus Operator (`:=`)** → `if (n := len(my_list)) > 10: print(f"List has {n} items")`  
+- **Use `zip()` & `enumerate()`** → `for name, age in zip(names, ages):`  
+- **Set for Fast Membership Checks** → `if value in my_set:` *(Faster than lists)*  
+- **`defaultdict` & `Counter` for Counting** → `freq = Counter(words)`  
+- **Efficient String Concatenation** → `text = " ".join(words)`  
+- **Function Caching (`@lru_cache`)**  
+  ```python
+  from functools import lru_cache
+  @lru_cache(None)
+  def fib(n): return n if n < 2 else fib(n-1) + fib(n-2)
+
+	•	try-except Over Checking First
+
+try:
+    result = my_dict[key]
+except KeyError:
+    result = default
+
+3️⃣ CHange one thing when you have an issue - do not refactor all the code at once!
+
+4️⃣ Testing Best Practices (Use pytest)
+
+✅ Basic Test
+
+import pytest
+def add(x, y): return x + y
+def test_add(): assert add(2, 3) == 5
+
+✅ Parameterized Tests
+
+@pytest.mark.parametrize("a, b, expected", [(1, 2, 3), (-1, 1, 0)])
+def test_add(a, b, expected): assert add(a, b) == expected
+
+✅ Mock External Dependencies (unittest.mock)
+
+from unittest.mock import Mock
+api_call = Mock(return_value={"data": "test"})
+assert api_call() == {"data": "test"}
+
+✅ Run Efficient Tests
+
+pytest -n auto --cov=my_module  # Parallel tests + coverage
+
+5️⃣ Logging & Debugging
+
+✅ Use Python’s logging Module
+
+import logging
+logging.basicConfig(level=logging.INFO)
+logging.info("Processing started")
+
+✅ Replace Print Statements with Logging
+	•	logging.debug(), logging.info(), logging.warning(), etc.
+
+6️⃣ Documentation & Comments
+
+✅ Use Docstrings (""" ... """) for Functions & Modules
+✅ Inline Comments for Complex Logic
+✅ Google-Style Docstrings Example
+
+def get_calendar_slots(location_id: str, start_date: datetime, end_date: datetime) -> list:
+    """
+    Retrieves available time slots from GHL for a given location.
+
+    Args:
+        location_id (str): The GHL location identifier.
+        start_date (datetime): The start of the time range.
+        end_date (datetime): The end of the time range.
+
+    Returns:
+        list: Available slot objects.
+    """
+
+🚀 Summary
+
+✔ PEP 8 → Clean formatting, proper spacing, and naming
+✔ Token Efficiency → Use comprehensions, built-ins, caching
+✔ Project Structure → Organized directories, clear separation of concerns
+✔ Testing → pytest + mocks + CI/CD integration
+✔ Logging & Documentation → Structured logs, meaningful docstrings
+
+💡 Code smart, test fast, and optimize well! 🚀
+
+---
+
+### **Key Features of This Version:**
+✅ **Compressed for LLMs** → No unnecessary verbosity  
+✅ **Markdown-friendly** → Structured, easy for AI to parse  
+✅ **Best of Both Worlds** → Combines efficiency tips, style guidelines, testing, and project structuring  
+✅ **Actionable & Concise** → Only essential Python practices  
+
+Would you like to add any **specific project-related details** or **custom guidelines** before finalizing? 🚀
